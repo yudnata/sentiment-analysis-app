@@ -52,7 +52,6 @@ def analyze():
         probs = model.predict_proba(X)[0]
         prob_max = round(max(probs) * 100, 2)
 
-        # --- Hasil prediksi (0 = negatif, 1 = positif) ---
         sentiment_label = "POSITIF" if int(pred) == 1 else "NEGATIF"
 
         return jsonify({

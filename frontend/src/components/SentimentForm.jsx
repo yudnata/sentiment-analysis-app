@@ -24,13 +24,13 @@ const SentimentForm = ({ onAnalyze, isLoading }) => {
         onChange={(e) => setText(e.target.value)}
         placeholder="Contoh: Saya setuju dengan kebijakan PPKM karena membantu menekan penyebaran COVID-19"
         required
-        disabled={isLoading} // Tambahkan disabled saat loading
+        disabled={isLoading}
       />
 
       <button
         type="submit"
         className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-xl text-lg shadow-md transition-all disabled:bg-gray-400 disabled:cursor-not-allowed"
-        disabled={isLoading} // Tambahkan disabled saat loading
+        disabled={isLoading}
       >
         {isLoading ? 'Menganalisis...' : 'Analisis'}
       </button>
