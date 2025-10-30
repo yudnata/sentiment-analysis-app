@@ -1,14 +1,11 @@
 import React, { useState } from 'react';
 
-// Menerima props onAnalyze dan isLoading dari App.jsx
 const SentimentForm = ({ onAnalyze, isLoading }) => {
   const [text, setText] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!text.trim()) return; // Jangan kirim jika teks kosong
-
-    // Panggil fungsi handleAnalyze yang ada di App.jsx
+    if (!text.trim()) return; 
     onAnalyze(text);
   };
 
@@ -35,7 +32,6 @@ const SentimentForm = ({ onAnalyze, isLoading }) => {
         className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-xl text-lg shadow-md transition-all disabled:bg-gray-400 disabled:cursor-not-allowed"
         disabled={isLoading} // Tambahkan disabled saat loading
       >
-        {/* Ganti teks tombol saat loading */}
         {isLoading ? 'Menganalisis...' : 'Analisis Sentimen'}
       </button>
     </form>

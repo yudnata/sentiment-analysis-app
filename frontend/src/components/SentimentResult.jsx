@@ -1,9 +1,8 @@
 import React from 'react';
-import { FaSpinner } from 'react-icons/fa'; // (Anda mungkin perlu: npm install react-icons)
+import { FaSpinner } from 'react-icons/fa';
 
-// Menerima props isLoading dan error
 const SentimentResult = ({ result, isLoading, error }) => {
-  // Tampilan 1: Saat Loading
+
   if (isLoading) {
     return (
       <div className="bg-white border border-gray-200 p-10 rounded-3xl shadow-md h-[450px] flex flex-col justify-center items-center">
@@ -16,7 +15,6 @@ const SentimentResult = ({ result, isLoading, error }) => {
     );
   }
 
-  // Tampilan 2: Saat Error
   if (error) {
     return (
       <div className="bg-white border border-gray-200 p-10 rounded-3xl shadow-md h-[450px] flex flex-col justify-center items-center">
@@ -26,23 +24,18 @@ const SentimentResult = ({ result, isLoading, error }) => {
     );
   }
 
-  // Tampilan 3: Saat Ada Hasil (Kode Asli Anda)
   if (result) {
     const color =
-      result.sentiment === 'positif'
+      result.sentiment === 'POSITIF'
         ? 'text-green-500'
-        : result.sentiment === 'negatif'
-        ? 'text-red-500'
-        : 'text-yellow-500';
+        : 'text-red-500'
 
     const bgColor =
-      result.sentiment === 'positif'
+      result.sentiment === 'POSITIF'
         ? 'bg-green-500'
-        : result.sentiment === 'negatif'
-        ? 'bg-red-500'
-        : 'bg-yellow-400';
+        : 'bg-red-500'
 
-    const probabilityPercent = Math.round(result.probability * 100);
+    const probabilityPercent = Math.round(result.probability);
 
     return (
       <div className="bg-white border border-gray-200 p-10 rounded-3xl shadow-md h-[450px] flex flex-col justify-center items-center transition-all duration-300">
@@ -65,7 +58,6 @@ const SentimentResult = ({ result, isLoading, error }) => {
     );
   }
 
-  // Tampilan 4: Default (Placeholder)
   return (
     <div className="bg-white border border-gray-200 p-10 rounded-3xl shadow-md h-[450px] flex flex-col justify-center items-center transition-all duration-300">
       <div className="text-gray-400 italic text-center text-lg">
