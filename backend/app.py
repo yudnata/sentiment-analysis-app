@@ -73,4 +73,4 @@ def analyze_sentiment():
     return jsonify({'sentiment': prediction, 'probability': max_prob})
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000)
+    app.run(debug=True, port=50000)
