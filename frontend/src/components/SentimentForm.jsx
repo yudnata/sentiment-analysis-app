@@ -1,20 +1,15 @@
 import React, { useState } from 'react';
 
-const SentimentForm = ({ setResult }) => {
+// Menerima props onAnalyze dan isLoading dari App.jsx
+const SentimentForm = ({ onAnalyze, isLoading }) => {
   const [text, setText] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!text.trim()) return; // Jangan kirim jika teks kosong
 
-    // nanti ini diganti dengan endpoint Flask kamu
-    const response = await fetch('http://localhost:5000/predict', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text }),
-    });
-
-    const data = await response.json();
-    setResult(data);
+    // Panggil fungsi handleAnalyze yang ada di App.jsx
+    onAnalyze(text);
   };
 
   return (
@@ -32,13 +27,16 @@ const SentimentForm = ({ setResult }) => {
         onChange={(e) => setText(e.target.value)}
         placeholder="Contoh: Saya setuju dengan kebijakan PPKM karena membantu menekan penyebaran COVID-19"
         required
+        disabled={isLoading} // Tambahkan disabled saat loading
       />
 
       <button
         type="submit"
-        className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-xl text-lg shadow-md transition-all"
+        className="bg-green-500 hover:bg-green-600 text-white font-semibold py-3 rounded-xl text-lg shadow-md transition-all disabled:bg-gray-400 disabled:cursor-not-allowed"
+        disabled={isLoading} // Tambahkan disabled saat loading
       >
-        Analisis Sentimen
+        {/* Ganti teks tombol saat loading */}
+        {isLoading ? 'Menganalisis...' : 'Analisis Sentimen'}
       </button>
     </form>
   );

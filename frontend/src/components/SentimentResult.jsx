@@ -1,45 +1,76 @@
 import React from 'react';
+import { FaSpinner } from 'react-icons/fa'; // (Anda mungkin perlu: npm install react-icons)
 
-const SentimentResult = ({ result }) => {
-  const color =
-    result?.sentiment === 'positif'
-      ? 'text-green-500'
-      : result?.sentiment === 'negatif'
-      ? 'text-red-500'
-      : 'text-yellow-500';
+// Menerima props isLoading dan error
+const SentimentResult = ({ result, isLoading, error }) => {
+  // Tampilan 1: Saat Loading
+  if (isLoading) {
+    return (
+      <div className="bg-white border border-gray-200 p-10 rounded-3xl shadow-md h-[450px] flex flex-col justify-center items-center">
+        <FaSpinner
+          className="animate-spin text-green-500"
+          size={60}
+        />
+        <p className="mt-4 text-gray-500 text-lg">Menganalisis...</p>
+      </div>
+    );
+  }
 
+  // Tampilan 2: Saat Error
+  if (error) {
+    return (
+      <div className="bg-white border border-gray-200 p-10 rounded-3xl shadow-md h-[450px] flex flex-col justify-center items-center">
+        <h3 className="text-2xl font-semibold text-red-500">Terjadi Error</h3>
+        <p className="mt-4 text-gray-600 text-center">{error}</p>
+      </div>
+    );
+  }
+
+  // Tampilan 3: Saat Ada Hasil (Kode Asli Anda)
+  if (result) {
+    const color =
+      result.sentiment === 'positif'
+        ? 'text-green-500'
+        : result.sentiment === 'negatif'
+        ? 'text-red-500'
+        : 'text-yellow-500';
+
+    const bgColor =
+      result.sentiment === 'positif'
+        ? 'bg-green-500'
+        : result.sentiment === 'negatif'
+        ? 'bg-red-500'
+        : 'bg-yellow-400';
+
+    const probabilityPercent = Math.round(result.probability * 100);
+
+    return (
+      <div className="bg-white border border-gray-200 p-10 rounded-3xl shadow-md h-[450px] flex flex-col justify-center items-center transition-all duration-300">
+        <h2 className="text-2xl font-semibold text-gray-800 mb-3">Hasil Analisis Sentimen</h2>
+        <p
+          className={`mt-6 text-5xl font-extrabold tracking-wide ${color} transition-all duration-300`}
+        >
+          {result.sentiment.toUpperCase()}
+        </p>
+        <p className="mt-5 text-gray-500 text-base italic">
+          Probabilitas: <span className="font-medium text-gray-700">{probabilityPercent}%</span>
+        </p>
+        <div className="mt-8 w-full bg-gray-100 rounded-xl h-3 overflow-hidden">
+          <div
+            className={`h-3 ${bgColor}`}
+            style={{ width: `${probabilityPercent}%` }}
+          ></div>
+        </div>
+      </div>
+    );
+  }
+
+  // Tampilan 4: Default (Placeholder)
   return (
     <div className="bg-white border border-gray-200 p-10 rounded-3xl shadow-md h-[450px] flex flex-col justify-center items-center transition-all duration-300">
-      {!result ? (
-        <div className="text-gray-400 italic text-center text-lg">
-          Hasil analisis akan muncul di sini setelah Anda mengirim opini
-        </div>
-      ) : (
-        <>
-          <h2 className="text-2xl font-semibold text-gray-800 mb-3">Hasil Analisis Sentimen</h2>
-          <p
-            className={`mt-6 text-5xl font-extrabold tracking-wide ${color} transition-all duration-300`}
-          >
-            {result.sentiment.toUpperCase()}
-          </p>
-          <p className="mt-5 text-gray-500 text-base italic">
-            Probabilitas: <span className="font-medium text-gray-700">{result.probability}</span>
-          </p>
-
-          <div className="mt-8 w-full bg-gray-100 rounded-xl h-3 overflow-hidden">
-            <div
-              className={`h-3 ${
-                result?.sentiment === 'positif'
-                  ? 'bg-green-500'
-                  : result?.sentiment === 'negatif'
-                  ? 'bg-red-500'
-                  : 'bg-yellow-400'
-              }`}
-              style={{ width: `${Math.round(result.probability * 100)}%` }}
-            ></div>
-          </div>
-        </>
-      )}
+      <div className="text-gray-400 italic text-center text-lg">
+        Hasil analisis akan muncul di sini setelah Anda mengirim opini
+      </div>
     </div>
   );
 };
